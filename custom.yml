@@ -66,7 +66,7 @@ switch:
 light:
   labelTemplates: []
   icon: mdi:led-strip
-  color: '#888888'
+  color: '#2222222'
   feedbackLayout: '$B1'
   feedback: |
     {% set brightness = attributes.brightness | default(0, true) %}
