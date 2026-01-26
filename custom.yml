@@ -65,7 +65,7 @@ switch:
 
 light:
   labelTemplates: []
-  icon: mdi:lightbulb
+  icon: mdi:led-strip
   color: '#888888'
   feedbackLayout: '$B1'
   feedback: |
