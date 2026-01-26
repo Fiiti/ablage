@@ -1,3 +1,4 @@
+# Quelle: https://raw.githubusercontent.com/cgiesche/streamdeck-homeassistant/master/public/config/default-display-config.yml
 # https://mycolor.space/?hex=%23845EC2&sub=1
 #_states:
 #  unavailable:
@@ -64,25 +65,22 @@ switch:
       icon: mdi:toggle-switch
 
 light:
-  icon: mdi:fire
-  color: '#003300'
-  labelTemplates:
-    - "{{ (attributes.brightness | default(0) / 2.55) | int }}%"
-    - ''
-    - ''
+  labelTemplates: []
+  icon: mdi:lightbulb
+  color: '#4d8076'
+  feedbackLayout: '$B1'
   feedback: |
-    {% set brightness = attributes.brightness | default(0) %}
+    {% set defaultBrightness = (255 if state === 'on' else 0) %}
+    {% set brightness = attributes.brightness | default(defaultBrightness, true) %}
     {
-      "indicator": {{ brightness / 2.55 }},
-      "backgroundColor": "{% if state == 'on' %}#ffd484{% else %}#888888{% endif %}"
+      "indicator": {{ brightness / 255 * 100 }},
+      "value": "{{ (brightness / 255 * 100) | int }}%"
     }
   states:
-    on:
-      icon: mdi:lightbulb
     unavailable:
       icon: mdi:lightbulb-alert
-      color: '#FF6F91'
-
+    on:
+      color: '#ffd484'
 
 input_boolean:
   labelTemplates: []
@@ -187,7 +185,7 @@ sensor:
         {% elif numState <= 20 %}
           #FFFF00
         {% elif numState <= 25 %}
-          #FFA500
+          #FFA500        
         {% else %}
           #FF0000
         {% endif %}
@@ -243,7 +241,7 @@ sensor:
         {% elif numState <= 90 %}
           #1ce200
         {% elif numState <= 100 %}
-          #00ff00
+          #00ff00        
         {% else %}
           #505050
         {% endif %}
@@ -362,4 +360,3 @@ media_player:
     off:
       color: '#505050'
       icon: mdi:television-off
-
