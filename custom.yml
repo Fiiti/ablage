@@ -64,23 +64,25 @@ switch:
       icon: mdi:toggle-switch
 
 light:
-  labelTemplates: []
-  icon: mdi:led-strip
-  color: '#2222222'
-  feedbackLayout: '$B1'
+  icon: mdi:fire
+  color: '#ff0000'
+  labelTemplates:
+    - "{{ (attributes.brightness | default(0) / 2.55) | int }}%"
+    - ''
+    - ''
   feedback: |
-    {% set brightness = attributes.brightness | default(0, true) %}
-    {% set rgb = attributes.rgb_color | default([255,255,255]) %}
+    {% set brightness = attributes.brightness | default(0) %}
     {
-      "indicator": {{ brightness / 255 * 100 }},
-      "backgroundColor": "rgb({{ rgb[0] }}, {{ rgb[1] }}, {{ rgb[2] }})",
-      "value": "{{ (brightness / 255 * 100) | int }}%"
+      "indicator": {{ brightness / 2.55 }},
+      "backgroundColor": "{% if state == 'on' %}#ffd484{% else %}#888888{% endif %}"
     }
   states:
+    on:
+      icon: mdi:lightbulb
     unavailable:
       icon: mdi:lightbulb-alert
-    on:
-      color: '#ffd484'
+      color: '#FF6F91'
+
 
 input_boolean:
   labelTemplates: []
